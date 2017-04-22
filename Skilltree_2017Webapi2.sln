@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Day1", "Day1", "{A91CAB21-8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D1_Lab01_XMLWebService", "D1_Lab01_XMLWebService\D1_Lab01_XMLWebService.csproj", "{5CFB697D-F533-4920-95DD-67260DD9D56D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D1_Lab02_FirstWebapi", "D1_Lab02_FirstWebapi\D1_Lab02_FirstWebapi.csproj", "{B4B85E1C-C9BB-41DD-BEE8-F2D4C9B8B99F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,11 +19,16 @@ Global
 		{5CFB697D-F533-4920-95DD-67260DD9D56D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CFB697D-F533-4920-95DD-67260DD9D56D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CFB697D-F533-4920-95DD-67260DD9D56D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4B85E1C-C9BB-41DD-BEE8-F2D4C9B8B99F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4B85E1C-C9BB-41DD-BEE8-F2D4C9B8B99F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4B85E1C-C9BB-41DD-BEE8-F2D4C9B8B99F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4B85E1C-C9BB-41DD-BEE8-F2D4C9B8B99F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5CFB697D-F533-4920-95DD-67260DD9D56D} = {A91CAB21-8388-41A3-9010-0BB257B2F7B2}
+		{B4B85E1C-C9BB-41DD-BEE8-F2D4C9B8B99F} = {A91CAB21-8388-41A3-9010-0BB257B2F7B2}
 	EndGlobalSection
 EndGlobal
