@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using D1_Lab02_FirstWebapi.Models;
+using Newtonsoft.Json;
 
 namespace D1_Lab02_FirstWebapi.Controllers
 {
@@ -25,15 +26,18 @@ namespace D1_Lab02_FirstWebapi.Controllers
 
         // GET: api/Products/5
         [ResponseType(typeof(Product))]
-        public async Task<IHttpActionResult> GetProduct(int id)
+        //public async Task<IHttpActionResult> GetProduct(int id)
+        public async Task<HttpResponseMessage> GetProduct(int id)
         {
             Product product = await db.Products.FindAsync(id);
             if (product == null)
             {
-                return NotFound();
+                //return NotFound();
+                Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
-            return Ok(product);
+            //return Ok(product);
+            return Request.CreateResponse(HttpStatusCode.Found, JsonConvert.SerializeObject(product));
         }
 
         // PUT: api/Products/5
@@ -68,6 +72,56 @@ namespace D1_Lab02_FirstWebapi.Controllers
                 }
             }
 
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // PUT: api/Patch/5
+        [ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PatchProduct(int id, Product product)
+        public async Task<IHttpActionResult> PatchProduct(int id, Product patchData)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != patchData.ProductID)
+            {
+                return BadRequest();
+            }
+            Product product = await db.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            // 異動 Product 物件部分欄位
+            product.ProductName = patchData.ProductName;
+            db.Entry(product).State = EntityState.Modified;
+
+            var excluded = new[] { "UnitPrice" };
+            var entry = db.Entry(product);
+            entry.State = EntityState.Modified;
+            foreach (var name in excluded)
+            {
+                entry.Property(name).IsModified = false;
+            }
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
             return StatusCode(HttpStatusCode.NoContent);
         }
 

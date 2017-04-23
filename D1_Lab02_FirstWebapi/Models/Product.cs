@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace D1_Lab02_FirstWebapi.Models
 {
     using System;
@@ -8,6 +10,12 @@ namespace D1_Lab02_FirstWebapi.Models
 
     public partial class Product
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Product()
+        {
+            Order_Details = new HashSet<Order_Detail>();
+        }
+
         public int ProductID { get; set; }
 
         [Required]
@@ -31,5 +39,9 @@ namespace D1_Lab02_FirstWebapi.Models
         public short? ReorderLevel { get; set; }
 
         public bool Discontinued { get; set; }
+
+        [JsonIgnore]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order_Detail> Order_Details { get; set; }
     }
 }
