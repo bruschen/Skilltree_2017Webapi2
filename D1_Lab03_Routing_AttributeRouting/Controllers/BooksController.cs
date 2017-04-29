@@ -12,17 +12,20 @@ using D1_Lab03_Routing_AttributeRouting.Models;
 
 namespace D1_Lab03_Routing_AttributeRouting.Controllers
 {
+    [RoutePrefix("books")]
     public class BooksController : ApiController
     {
         private BookAPIContext db = new BookAPIContext();
 
         // GET: api/Books
+        [Route("")]
         public IQueryable<Book> GetBooks()
         {
             return db.Books;
         }
 
         // GET: api/Books/5
+        [Route("{id:int}")]
         [ResponseType(typeof(Book))]
         public IHttpActionResult GetBook(int id)
         {
@@ -113,6 +116,37 @@ namespace D1_Lab03_Routing_AttributeRouting.Controllers
         private bool BookExists(int id)
         {
             return db.Books.Count(e => e.BookId == id) > 0;
+        }
+
+        [Route("{genre}")]
+        public IHttpActionResult GetBookByGenre(string genre)
+        {
+            var books = db.Books
+                .Include(b => b.Author)
+                .Where(b => b.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase));
+
+            return Ok(books);
+        }
+
+        [Route("~/authors/{authorId:int}/books")]
+        public IHttpActionResult GetBooksByAuthor(int authorId)
+        {
+            var author = db.Books
+                .Include(b => b.Author)
+                .Where(b => b.AuthorId == authorId);
+
+            return Ok(author);
+        }
+
+        [Route("date/{pubdate:datetime}")]
+        //[Route("api/books/date/{pubdate:datetime:regex(\\d{4}-\\d{2}-\\d{2})}")]
+        public IHttpActionResult Get(DateTime pubdate)
+        {
+            var books = db.Books.Include(b => b.Author)
+                .Where(b => DbFunctions.TruncateTime(b.PublishDate)
+                            == DbFunctions.TruncateTime(pubdate));
+
+            return Ok(books);
         }
     }
 }

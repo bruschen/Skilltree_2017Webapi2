@@ -13,7 +13,7 @@ namespace D1_Lab03_Routing_AttributeRouting.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201704221002042_Initial"; }
+            get { return "201704281515573_Initial"; }
         }
         
         string IMigrationMetadata.Source
